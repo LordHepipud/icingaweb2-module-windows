@@ -1,0 +1,343 @@
+a:focus {
+  outline: none;
+}
+
+a:hover::before {
+  text-decoration: none;
+}
+
+thead th {
+  white-space: nowrap;
+
+  a:hover, a:focus {
+    text-decoration: underline;
+  }
+}
+
+table.preformatted td {
+  .code();
+  padding: 0;
+}
+
+tr[href].same-link-hovered {
+  background-color: @tr-hover-color;
+}
+
+th.table-header-day {
+  text-align: right;
+}
+
+h2 {
+  margin-top: 2em;
+}
+
+p.information, p.warning, p.critical {
+  margin: 0.5em 0 0.5em 0;
+  background-color: @color-ok;
+  color: white;
+  font-weight: bold;
+  padding: 1em;
+}
+
+p.warning {
+  background-color: @color-warning;
+}
+
+p.critical {
+  background-color: @color-critical;
+}
+
+.controls .refresh-container-control:focus {
+  background-color: inherit;
+}
+
+/** Action Bar **/
+div.action-bar a, div.action-bar form i {
+  color: @icinga-blue;
+}
+
+div.action-bar > a {
+  margin-right: 1em;
+}
+
+div.action-bar {
+  > * {
+    vertical-align: middle;
+  }
+  .pagination-control {
+    float: none;
+    clear: none;
+    display: inline-block;
+    line-height: inherit;
+    margin: 0;
+  }
+
+  form input {
+    margin: 0;
+  }
+}
+
+#layout.twocols div.action-bar .pagination-control {
+  li {
+    display: none;
+  }
+
+  li:nth-child(1), li.active, li:last-child {
+    display: list-item;
+  }
+
+  li.active a {
+    border-bottom: none;
+  }
+}
+
+/** Dropdown in action bar **/
+div.action-bar ul {
+  padding: 0;
+  margin: 0;
+
+  li {
+    list-style-type: none;
+    a { display: block; }
+  }
+}
+
+div.action-bar > ul {
+  display: inline-block;
+  > li {
+    display: inline-block;
+  }
+}
+
+div.action-bar > ul ul {
+  padding: 0.5em 0em 1em 0em;
+  min-width: 10em;
+  position: absolute;
+  display: none;
+  color: white;
+  background-color: @icinga-blue;
+
+  a {
+    display: block;
+    padding: 0.3em 2em 0.3em 2em;
+    margin: 0;
+    outline: none;
+    color: white;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  li.active a {
+    font-weight: bold;
+  }
+}
+
+div.action-bar > ul > li:hover ul {
+  display: block;
+}
+div.action-bar > ul > li > a {
+  padding: 0.2em 0.5em;
+}
+div.action-bar > ul > li:hover {
+  background-color: @icinga-blue;
+  & > a {
+    color: white;
+    text-decoration: none;
+  }
+}
+/** END of dropdown in action bar **/
+
+/** Tree **/
+.tree li a {
+  display: inline-block;
+  padding-left: 1em;
+  line-height: 2em;
+  text-decoration: none;
+  color: #777;
+  outline: 0;
+  background-repeat: no-repeat;
+  background-position: 0.8em 0.4em;
+}
+
+ul.tree li > .handle {
+  background-image: none;
+  &:before {
+    content: '\e806';
+    font-family: 'ifont';
+    position: absolute;
+    font-size: 0.6em;
+    margin-left: 0.25em;
+    margin-top: 0.9em;
+  }
+}
+ul.tree li.collapsed > .handle {
+  background-image: none;
+  &:before {
+    content: '\e805';
+  }
+}
+/** Tree custom **/
+
+.tree li a.red::before {
+  color: @colorCritical;
+}
+
+.tree li a.yellow::before {
+  color: @colorWarning;
+}
+
+.tree li a.green::before {
+  color: @colorOk;
+}
+
+
+/** QuickSearch **/
+
+form.quicksearch {
+  display: block;
+  input.search {
+    width: 8em;
+    min-width: unset;
+    border: none;
+    background-size: 0.75em auto;
+    background-position: 0.5em 0.9em;
+    padding-left: 1.5em;
+    margin-left: 1.5em;
+    font-size: 0.75em;
+    font-weight: normal;
+    &:focus {
+      width: 16em;
+      .transition(width 0.5s ease);
+      border: none;
+    }
+  }
+}
+
+#layout.twocols form.quicksearch input.search {
+  float: right;
+}
+
+div.health {
+  border-left: 0.5em solid transparent;
+  margin-bottom: 1em;
+  padding: 0.5em 1em;
+
+  &.red {
+    border-color: @color-critical;
+  }
+  &.green {
+    border-color: @color-ok;
+  }
+}
+
+/** Various **/
+
+table.name-value-table a {
+  color: @icinga-blue;
+}
+
+tr.state td:first-child, tr.event td:first-child {
+  padding-left: 2em;
+  &::before {
+    font-family: 'ifont';
+    // icon-help:
+    float: left;
+    content: '\e85b';
+    font-weight: bold;
+    margin-left: -1.5em;
+    margin-top: 0;
+  }
+}
+
+tr.disabled {
+  background-color: @gray-lightest;
+}
+
+tr.state.error td:first-child::before {
+  color: @color-critical;
+  // icon-cancel
+  content: '\e804';
+}
+
+
+tr.state td:first-child::before, tr.event td:first-child::before {
+  font-family: 'ifont';
+  // icon-help:
+  float: left;
+  content: '\e85b';
+  font-weight: bold;
+  margin-left: -1.5em;
+  margin-top: 0;
+}
+
+/* Less spacing in rows */
+.common-table td {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  word-break: keep-all;
+  white-space: nowrap;
+}
+
+/* Tree, stolen from Director */
+
+.tree li a {
+  display: inline-block;
+  padding-left: 2.4em;
+  line-height: 2em;
+  text-decoration: none;
+  color: #777;
+  outline: 0;
+  background-repeat: no-repeat;
+  background-position: 0.8em 0.4em;
+}
+
+ul.tree li > .handle {
+  background-image: none;
+  &:before {
+    content: '\e806';
+    font-family: 'ifont';
+    position: absolute;
+    font-size: 0.6em;
+    margin-left: 0.25em;
+    margin-top: 0.9em;
+  }
+}
+ul.tree li.collapsed > .handle {
+  background-image: none;
+  &:before {
+    content: '\e805';
+  }
+}
+.tree li a {
+  padding-left: 1em;
+}
+/* End of tree */
+
+/** Resource Usage **/
+div.resource-usage {
+  > .usage-bar {
+    min-width: 8em;
+    border: none;
+    padding: 0;
+    background-color: @gray-lighter;
+    height: 1em;
+    border-radius: 0.3em;
+    -webkit-box-shadow: inset 0px 0px 2px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: inset 0px 0px 2px 0px rgba(0,0,0,0.3);
+    box-shadow: inset 0px 0px 2px 0px rgba(0,0,0,0.3);
+    overflow: hidden;
+    > .usage {
+      height: 100%;
+      display: block;
+      float: left;
+    }
+  }
+  > .usage-used {
+    float: left;
+  }
+  > .usage-capacity {
+    float: right;
+  }
+}

@@ -1,0 +1,80 @@
+<?
+    use \Icinga\Module\Windows\Helper\Tools;
+    use \Icinga\Module\Windows\Helper\Navigation;
+?>
+
+<?php if (! $this->compact): ?>
+    <div class="controls">
+        <?= $this->tabs ?>
+    </div>
+<?php endif ?>
+<div class="action-bar" data-base-target="_main">
+    <?= Navigation::getInstance()->addBackButton($this, 'windows\updates') ?>
+</div>
+<div class="content">
+    <h3>Detailed description for pending update</h3>
+    <? if ($pendingupdate === null) { ?>
+        <p><?= $this->translate('No update description found.') ?></p>
+    <? } else { ?>
+    <table class="name-value-table">
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <td>
+                    <?= $pendingupdate->getName() ?>
+                </td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    <?= $pendingupdate->getDescription() ?>
+                </td>
+            </tr>
+            <tr>
+                <th>Uninstall Notes</th>
+                <td>
+                    <?= $pendingupdate->getUninstallNote() ?>
+                </td>
+            </tr>
+            <tr>
+                <th>Support Url</th>
+                <td>
+                    <a href="<?= $pendingupdate->getSupportUrl() ?>" target="_blank"><?= $pendingupdate->getSupportUrl() ?></a>
+                </td>
+            </tr>
+            <tr>
+                <th>Requires Reboot</th>
+                <td>
+                    <? if ($pendingupdate->getRequireReboot() === true) { ?>
+                        <i class="icon icon-attention-circled" original-title="The host is requiring a reboot"></i>
+                    <? } else { ?>
+                        <i class="icon icon-ok" original-title="No reboot for this udpated required"></i>
+                    <? } ?>
+                </td>
+            </tr>
+            <tr>
+                <th>Download Size</th>
+                <td>
+                    <?= round(Tools::getInstance()->convertBytesToMB($pendingupdate->getDownloadSize()), 2) ?> MB
+                </td>
+            </tr>
+            <tr>
+                <th>Downloaded</th>
+                <td>
+                    <? if ($pendingupdate->getDownloaded() === true) { ?>
+                        <i class="icon icon-ok" original-title="Updates have been downloaded"></i>
+                    <? } else { ?>
+                        <i class="icon icon-download" original-title="Updates require to be downloaded"></i>
+                    <? } ?>
+                </td>
+            </tr>
+            <tr>
+                <th>Superseded Update IDs</th>
+                <td>
+                    <?= $pendingupdate->getSupersededIDs() ?>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <? } ?>
+</div>

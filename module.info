@@ -1,0 +1,9 @@
+Module: Icinga Module for Windows
+Version: 0.0.2-technical-preview
+Depends: director>=1.4.0
+Description: Windows Infrastructure Module
+ Get an overview of all your Windows hosts within your infrastrcuture, allowing
+ a quick and detailed overview about most common attributes of your systems.
+
+ In combination with the Icinga Director and Icinga 2, you will also benefit from
+ setting up a Windows infrastructure monitoring very quickly.
