@@ -35,6 +35,7 @@ class ProcessTable extends BaseTable
             $this->createColumn('proc_processor_percent', $this->translate('Processor in %')),
             $this->createColumn('proc_threads', $this->translate('Threads')),
             $this->createColumn('proc_used_memory', $this->translate('Used Memory'), [
+                'proc_used_memory',
                 'proc_used_memory'
             ])->setRenderer(function($row) {
                 return sprintf('%s MB',
