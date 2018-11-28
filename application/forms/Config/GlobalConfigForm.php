@@ -3,17 +3,15 @@
 
 namespace Icinga\Module\Windows\Forms\Config;
 
-use Icinga\Forms\ConfigForm;
+use Icinga\Module\Windows\Db;
+use Icinga\Module\Windows\Web\Form\BaseForm;
 use Icinga\Web\Notification;
 use Icinga\Module\Windows\Helper\DbHelper;
-use Icinga\Module\Windows\WindowsDB;
 use Icinga\Data\Filter\Filter;
 
-class GlobalConfigForm extends ConfigForm
+class GlobalConfigForm extends BaseForm
 {
-    /**
-     * @var WindowsDB
-     */
+    /** @var Db */
     protected $db;
 
     /**
@@ -21,36 +19,45 @@ class GlobalConfigForm extends ConfigForm
      */
     protected $dbHelper;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function init()
+    public function __construct(Db $db)
     {
-        $this->db = WindowsDB::fromConfig();
-        $this->dbHelper = DbHelper::getInstance();
-        if ($this->dbHelper->isDbConfigured() == true) {
-            $this->setSubmitLabel($this->translate('Save'));
-        }
+        $this->db = $db;
+        parent::__construct();
     }
 
     /**
-     * {@inheritdoc}
+     * @throws \Icinga\Exception\ConfigurationError
+     * @throws \Zend_Form_Exception
      */
-    public function createElements(array $formData)
+    public function setup()
     {
+        $this->dbHelper = DbHelper::getInstance();
+        $this->setSubmitLabel(
+            $this->translate('Store check configuration')
+        );
+
         if ($this->dbHelper->isDbConfigured() == false) {
-            $this->addHint('You have to select a database from above first.');
+            $this->addHint($this->translate(
+                'No database has been configured yet.'
+            ));
             return;
         }
 
         $check_config = $this->getAvailableModules();
+
+        if (Count($check_config) == 0) {
+            $this->addHint($this->translate(
+                'No modules are available yet.'
+            ));
+            return;
+        }
 
         foreach ($check_config as $config) {
             $value = $this->getGlobalCheckConfiguration($config->name);
             $enabled = 0;
             if ($value == false) {
                 $value = 600;
-                $enabled = 1;
+                $enabled = 0;
             } else {
                 $enabled = $value->enabled;
                 $value = $value->check_interval;
@@ -59,12 +66,12 @@ class GlobalConfigForm extends ConfigForm
             $name = ucfirst($config->name);
 
             $this->addElement(
-                'number',
+                'text',
                 'value_' . $name,
                 array(
                     'description' => $this->translate('Check intervall for the ' . $name . ' module'),
                     'label'       => $this->translate($name . ' Module'),
-                    'value'       => $value
+                    'value'       => $value,
                 )
             );
             $this->addElement(

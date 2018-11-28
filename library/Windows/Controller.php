@@ -5,6 +5,7 @@ namespace Icinga\Module\Windows;
 
 use dipl\Html\Error;
 use dipl\Web\CompatController;
+use Exception;
 use Icinga\Application\Icinga;
 use Icinga\Exception\IcingaException;
 use Icinga\Module\Monitoring\Backend\MonitoringBackend;
@@ -13,6 +14,9 @@ use Icinga\Data\Filter\Filter;
 
 class Controller extends CompatController
 {
+    /** @var Db */
+    private $db;
+
     /** @var View */
     public $view;
 
@@ -25,7 +29,31 @@ class Controller extends CompatController
      */
     protected function getDb()
     {
-        return Db::fromConfig();
+        return Db::newConfiguredInstance();
+    }
+
+    protected function db()
+    {
+        if ($this->db === null) {
+            try {
+                $this->db = Db::newConfiguredInstance();
+                $migrations = new Db\Migrations($this->db);
+                if (! $migrations->hasSchema()) {
+                    $this->redirectToConfiguration();
+                }
+            } catch (Exception $e) {
+                $this->redirectToConfiguration();
+            }
+        }
+
+        return $this->db;
+    }
+
+    protected function redirectToConfiguration()
+    {
+        if ($this->getRequest()->getControllerName() !== 'config') {
+            $this->redirectNow('windows/config');
+        }
     }
 
     protected function runFailSafe($callback)

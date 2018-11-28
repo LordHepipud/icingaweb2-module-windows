@@ -333,7 +333,7 @@ class WindowsDB extends DbRepository
     {
         if ($config === null) {
             $moduleConfig = Config::module('windows');
-            if (($resourceName = $moduleConfig->get('backend', 'resource')) === null) {
+            if (($resourceName = $moduleConfig->get('db', 'resource')) === null) {
                 return null;
             }
 
