@@ -352,8 +352,8 @@ class PerfCounter
             'counter' => $counterHelpName,
         );
         $queryColumns = $this->dbHelper->addQueryColumn($queryColumns, 'counter_type', $counter['sample'], 'CounterType', 0);
-        $queryColumns = $this->dbHelper->addQueryColumn($queryColumns, 'type', $counter, 'type', '');
-        $queryColumns = $this->dbHelper->addQueryColumn($queryColumns, 'help', $counter, 'help', '');
+        $queryColumns = $this->dbHelper->addQueryColumn($queryColumns, 'type', $counter, 'type');
+        $queryColumns = $this->dbHelper->addQueryColumn($queryColumns, 'help', $counter, 'help');
 
         $this->db->insert(
             'host_perf_counter_help',
