@@ -118,9 +118,19 @@ class CounterInfoTable extends NameValueTable
             $this->translate('Counter Frequency') => $counter_row->counter_frequency,
             $this->translate('Counter Timestamp') => $counter_row->counter_timestamp,
             $this->translate('Timestamp') => $counter_row->timestamp,
-            $this->translate('Timestamp 100 nsec') => $counter_row->timestamp_100nsec,
-            $this->translate('Counter Type') => ($counter_help->type . ' (' . $counter_help->counter_type . ')'),
-            $this->translate('Description') => $counter_help->help
+            $this->translate('Timestamp 100 nsec') => $counter_row->timestamp_100nsec
         ]);
+
+        if ($counter_help != null) {
+            $this->addNameValuePairs([
+                $this->translate('Counter Type') => ($counter_help->type . ' (' . $counter_help->counter_type . ')'),
+                $this->translate('Description') => $counter_help->help
+            ]);
+        } else {
+            $this->addNameValuePairs([
+                $this->translate('Counter Type') => 'Not available',
+                $this->translate('Description') => 'Not available'
+            ]);
+        }
     }
 }
