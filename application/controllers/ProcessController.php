@@ -3,13 +3,13 @@
 
 namespace Icinga\Module\Windows\Controllers;
 
-use Icinga\Module\Windows\WindowsController;
-use Icinga\Module\Windows\Object\Objects\Processes;
+use Icinga\Module\Windows\Controller;
+use Icinga\Module\Windows\Web\Table\ProcessTable;
 
 /**
  * Documentation module index
  */
-class ProcessController extends WindowsController
+class ProcessController extends Controller
 {
     protected $response;
     /**
@@ -19,20 +19,18 @@ class ProcessController extends WindowsController
      */
     public function init()
     {
-        parent::init();
-        $this->view->title = 'Windows ' . $this->translate(' Process') . ': ' . $this->translate('View');
         $this->assertPermission('windows/process');
     }
 
     public function indexAction()
     {
-        $this->activateTab('processes');
+        $this->addMainTabs('processes');
 
-        $this->view->host = $this->params->get('host');
-        $this->view->port = $this->params->get('port');
-        $this->view->process = $this->params->get('process');
-
-        $processes = new Processes($this->view->host);
-        $this->view->processContent = $processes->loadSingleDB($this->view->process);
+        $this->addTitle($this->translate('Process Details'));
+        $table = new ProcessTable($this->getDb());
+        $table->setHost($this->params->get('host'));
+        $table->setProcess($this->params->get('process'));
+        $table->handleSortUrl($this->url());
+        $table->renderTo($this);
     }
 }
