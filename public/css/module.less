@@ -31,20 +31,27 @@ h2 {
   margin-top: 2em;
 }
 
-p.information, p.warning, p.critical {
-  margin: 0.5em 0 0.5em 0;
-  background-color: @color-ok;
+p.error, p.warning, p.information {
   color: white;
+  padding: 1em 2em;
   font-weight: bold;
-  padding: 1em;
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+  }
+}
+
+p.error {
+  background-color: @colorCritical;
 }
 
 p.warning {
-  background-color: @color-warning;
+  background-color: @colorWarning;
 }
 
-p.critical {
-  background-color: @color-critical;
+p.information {
+  background-color: @colorOk;
 }
 
 .controls .refresh-container-control:focus {
@@ -339,5 +346,14 @@ div.resource-usage {
   }
   > .usage-capacity {
     float: right;
+  }
+}
+
+/* Director Forms */
+
+form {
+  #_FAKE_SUBMIT {
+    position: absolute;
+    left: -100%;
   }
 }
