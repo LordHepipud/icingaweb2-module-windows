@@ -5,7 +5,6 @@ namespace Icinga\Module\Windows\Web\Table\Object;
 use dipl\Translation\TranslationHelper;
 use dipl\Web\Widget\NameValueTable;
 use Icinga\Module\Windows\Helper\DbHelper;
-use Icinga\Module\Windows\Helper\Tools;
 use Icinga\Module\Windows\WindowsDB;
 
 class CounterInfoTable extends NameValueTable

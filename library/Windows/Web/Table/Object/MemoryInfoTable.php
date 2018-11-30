@@ -3,12 +3,10 @@
 namespace Icinga\Module\Windows\Web\Table\Object;
 
 use dipl\Translation\TranslationHelper;
-use dipl\Html\Link;
 use dipl\Html\Html;
 use dipl\Web\Widget\NameValueTable;
 use Icinga\Module\Windows\Helper\DbHelper;
 use Icinga\Module\Windows\Object\Objects\Hardware;
-use Icinga\Module\Windows\Helper\Tools;
 use Icinga\Module\Windows\Object\Objects\Memory;
 use Icinga\Module\Windows\Web\Widget\MemoryUsage;
 

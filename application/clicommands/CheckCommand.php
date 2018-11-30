@@ -2,7 +2,6 @@
 
 namespace Icinga\Module\Windows\Clicommands;
 
-use Icinga\Date\DateFormatter;
 use Icinga\Module\Windows\Object\Objects\Memory;
 use Icinga\Module\Windows\Object\Objects\Processes;
 use Icinga\Module\Windows\Object\Objects\Services;

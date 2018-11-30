@@ -3,8 +3,6 @@
 
 namespace Icinga\Module\Windows\Controllers;
 
-use Icinga\Module\Windows\WindowsController;
-use Icinga\Module\Windows\WindowsDB;
 use Icinga\Web\Controller;
 use Icinga\Module\Windows\CheckResultApi\ApiHandler;
 

@@ -3,7 +3,6 @@
 namespace Icinga\Module\Windows\Web\Table;
 
 use dipl\Html\Html;
-use dipl\Html\Icon;
 use dipl\Html\Link;
 
 class HostsTable extends BaseTable

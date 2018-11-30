@@ -4,7 +4,6 @@
 namespace Icinga\Module\Windows\Controllers;
 
 use Icinga\Module\Windows\Controller;
-use Icinga\Module\Windows\Web\Table\InstalledUpdatesTable;
 use Icinga\Module\Windows\Web\Table\PendingUpdatesTable;
 
 /**

@@ -5,12 +5,9 @@ namespace Icinga\Module\Windows;
 
 use Icinga\Application\Config;
 use Icinga\Data\ConfigObject;
-use Icinga\Data\Filter\Filter;
-use Icinga\Data\Filter\FilterExpression;
 use Icinga\Data\ResourceFactory;
 use Icinga\Exception\ConfigurationError;
 use Icinga\Repository\DbRepository;
-use Icinga\Repository\RepositoryQuery;
 
 class WindowsDB extends DbRepository
 {

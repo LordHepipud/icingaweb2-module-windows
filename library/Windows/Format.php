@@ -2,8 +2,6 @@
 
 namespace Icinga\Module\Windows;
 
-use Icinga\Util\Format as WebFormat;
-
 class Format
 {
     public static function convertBytes($bytes)

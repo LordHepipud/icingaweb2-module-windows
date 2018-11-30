@@ -4,12 +4,7 @@
 namespace Icinga\Module\Windows\Controllers;
 
 use Icinga\Module\Windows\Controller;
-use Icinga\Module\Windows\Object\Objects\Processes;
-use Icinga\Module\Windows\Object\WindowsHost;
 use Icinga\Module\Windows\Web\Table\ProcessesTable;
-use Icinga\Module\Windows\WindowsController;
-use Icinga\Module\Windows\Data\HostApi;
-use Icinga\Web\Url;
 
 /**
  * Documentation module index

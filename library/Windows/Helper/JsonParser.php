@@ -2,10 +2,6 @@
 
 namespace Icinga\Module\Windows\Helper;
 
-use Icinga\Application\Benchmark;
-use Icinga\Exception\ConfigurationError;
-use Exception;
-
 class JsonParser
 {
     protected $input;

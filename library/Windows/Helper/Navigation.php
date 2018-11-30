@@ -2,8 +2,6 @@
 
 namespace Icinga\Module\Windows\Helper;
 
-use Icinga\Web\Controller;
-
 class Navigation
 {
     private static $instance = null;

@@ -5,8 +5,6 @@ namespace Icinga\Module\Windows\Controllers;
 
 use Icinga\Module\Windows\Controller;
 use Icinga\Module\Windows\Web\Table\Object\BiosDetailsInfoTable;
-use Icinga\Module\Windows\Web\Table\Object\ServiceInfoTable;
-use Icinga\Web\Url;
 
 /**
  * Documentation module index

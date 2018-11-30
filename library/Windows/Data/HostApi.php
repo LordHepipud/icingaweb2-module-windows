@@ -3,9 +3,6 @@
 namespace Icinga\Module\Windows\Data;
 
 use Icinga\Module\Windows\Core\RestApiClient;
-use Icinga\Application\Benchmark;
-use Icinga\Exception\ConfigurationError;
-use Exception;
 
 class HostApi
 {

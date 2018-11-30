@@ -7,7 +7,6 @@ use dipl\Html\Link;
 use dipl\Html\Html;
 use dipl\Web\Widget\NameValueTable;
 use Icinga\Module\Windows\Helper\DbHelper;
-use Icinga\Module\Windows\Helper\Tools;
 use Icinga\Module\Windows\Object\Objects\Network;
 use Icinga\Module\Windows\Web\Widget\InterfaceUsage;
 

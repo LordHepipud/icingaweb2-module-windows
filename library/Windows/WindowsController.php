@@ -3,16 +3,13 @@
 
 namespace Icinga\Module\Windows;
 
-use http\Url;
 use Icinga\Application\Icinga;
 use Icinga\Data\QueryInterface;
-use Icinga\Data\ResourceFactory;
 use Icinga\Exception\IcingaException;
 use Icinga\Exception\Json\JsonEncodeException;
 use Icinga\Module\Monitoring\Backend\MonitoringBackend;
 use Icinga\Web\Controller;
 use Icinga\Web\View;
-use Icinga\Data\Filter\Filter;
 use Exception;
 use Icinga\Exception\NotFoundError;
 

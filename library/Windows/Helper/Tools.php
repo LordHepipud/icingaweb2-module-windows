@@ -2,8 +2,6 @@
 
 namespace Icinga\Module\Windows\Helper;
 
-use Icinga\Module\Windows\Web\Widget\SimpleUsageBar;
-
 class Tools
 {
     private static $instance = null;

@@ -2,10 +2,6 @@
 
 namespace Icinga\Module\Windows\Object\Objects;
 
-use Icinga\Application\Benchmark;
-use Icinga\Exception\ConfigurationError;
-use Exception;
-
 class RamInfo
 {
     protected $id;

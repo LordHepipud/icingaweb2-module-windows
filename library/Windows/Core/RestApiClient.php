@@ -2,7 +2,6 @@
 
 namespace Icinga\Module\Windows\Core;
 
-use Icinga\Application\Benchmark;
 use Icinga\Exception\ConfigurationError;
 use Exception;
 

@@ -5,7 +5,6 @@ namespace Icinga\Module\Windows\Controllers;
 
 use Icinga\Module\Windows\Controller;
 use Icinga\Module\Windows\Web\Table\Object\CounterInfoTable;
-use Icinga\Web\Url;
 
 /**
  * Documentation module index

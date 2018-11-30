@@ -2,9 +2,7 @@
 
 namespace Icinga\Module\Windows\Object\Objects;
 
-use Icinga\Module\Windows\Helper\JsonParser;
 use Icinga\Module\Windows\Helper\Properties;
-use Icinga\Data\Filter\Filter;
 
 abstract class BaseClass
 {

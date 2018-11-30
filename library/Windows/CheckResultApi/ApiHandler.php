@@ -2,12 +2,6 @@
 
 namespace Icinga\Module\Windows\CheckResultApi;
 
-use Icinga\Exception\ConfigurationError;
-use Exception;
-use Icinga\Module\Monitoring\Controller;
-use Icinga\Module\Windows\Object\Objects\BaseClass;
-use Icinga\Module\Windows\Object\Objects\Cpu;
-use Icinga\Module\Windows\Object\Objects\Memory;
 use Icinga\Module\Windows\WindowsDB;
 use Icinga\Data\Filter\Filter;
 

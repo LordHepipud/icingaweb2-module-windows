@@ -3,9 +3,6 @@
 namespace Icinga\Module\Windows\Object\Objects;
 
 use Icinga\Module\Windows\Helper\JsonParser;
-use Icinga\Application\Benchmark;
-use Icinga\Exception\ConfigurationError;
-use Exception;
 
 class Base
 {

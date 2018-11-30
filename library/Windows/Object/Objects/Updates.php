@@ -2,11 +2,9 @@
 
 namespace Icinga\Module\Windows\Object\Objects;
 
-use Icinga\Module\Windows\Helper\JsonParser;
 use Icinga\Module\Windows\Helper\Properties;
 use Icinga\Module\Windows\WindowsDB;
 use Icinga\Data\Filter\Filter;
-use Icinga\Exception\ProgrammingError;
 
 class Updates
 {
