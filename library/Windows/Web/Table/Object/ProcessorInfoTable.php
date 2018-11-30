@@ -72,7 +72,17 @@ class ProcessorInfoTable extends NameValueTable
         ]);
         $this->addNameValueRow(
             'Maximum Threads',
-            $this->hardware->getTotalThreads()
+            Link::create(
+                $this->hardware->getTotalThreads(),
+                'windows/processor',
+                [
+                    'host'      => $this->hostname
+                ],
+                [
+                    'class' => 'action-link',
+                    'data-base-target' => '_next'
+                ]
+            )
         );
     }
 
