@@ -232,6 +232,27 @@ abstract class BaseTable extends ZfQueryBasedTable
             $columns = [$columns];
         }
 
+        $searchColumns = $this->getDefaultColumnNames();
+        $hasColumns = false;
+
+        foreach ($searchColumns as $column) {
+            foreach ($columns as $entry) {
+                $entry = str_replace(' DESC', '', $entry);
+                $entry = str_replace(' ASC', '', $entry);
+                if ($entry == $column) {
+                    $hasColumns = true;
+                    break;
+                }
+            }
+            if ($hasColumns) {
+                break;
+            }
+        }
+
+        if ($hasColumns == false) {
+            return $this;
+        }
+
         $query = $this->getQuery();
         foreach ($columns as $columnName) {
             $space = strpos($columnName, ' ');
