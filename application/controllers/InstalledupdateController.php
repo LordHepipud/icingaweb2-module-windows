@@ -3,40 +3,39 @@
 
 namespace Icinga\Module\Windows\Controllers;
 
-use Icinga\Module\Windows\Object\WindowsHost;
-use Icinga\Module\Windows\Object\Objects\Updates;
-use Icinga\Module\Windows\WindowsController;
-use Icinga\Module\Windows\Data\HostApi;
-use Icinga\Web\Url;
+use Icinga\Module\Windows\Controller;
+use Icinga\Module\Windows\Web\Table\Object\InstalledUpdateInfoTable;
 
 /**
  * Documentation module index
  */
-class InstalledupdateController extends WindowsController
+class InstalledupdateController extends Controller
 {
     protected $response;
+
     /**
      * Documentation module landing page
      *
      * Lists documentation links
+     * @throws \Icinga\Security\SecurityException
      */
     public function init()
     {
-        parent::init();
-        $this->view->title = 'Windows ' . $this->translate(' Environment') . ': ' . $this->translate('Overview');
         $this->assertPermission('windows/installedupdate');
     }
 
     public function indexAction()
     {
-        $this->activateTab('updates');
+        $this->addMainTabs('updates');
 
-        $this->view->host = $this->params->get('host');
-        $updates = new Updates($this->view->host);
+        $this->addTitle($this->translate('Installed Update Details'));
 
-        $this->view->installedupdate = $updates->loadUpdateHistoryFromDB(
-            $this->params->get('name'),
-            $this->params->get('date')
+        $this->content()->add(
+            new InstalledUpdateInfoTable(
+                $this->params->get('host'),
+                $this->params->get('name'),
+                $this->params->get('date')
+            )
         );
     }
 }

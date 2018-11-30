@@ -3,36 +3,38 @@
 
 namespace Icinga\Module\Windows\Controllers;
 
-use Icinga\Module\Windows\Object\Objects\Updates;
-use Icinga\Module\Windows\WindowsController;
+use Icinga\Module\Windows\Controller;
+use Icinga\Module\Windows\Web\Table\Object\HotfixInfoTable;
 
 /**
  * Documentation module index
  */
-class HotfixController extends WindowsController
+class HotfixController extends Controller
 {
     protected $response;
+
     /**
      * Documentation module landing page
      *
      * Lists documentation links
+     * @throws \Icinga\Security\SecurityException
      */
     public function init()
     {
-        parent::init();
-        $this->view->title = 'Windows ' . $this->translate(' Environment') . ': ' . $this->translate('Overview');
         $this->assertPermission('windows/hotfix');
     }
 
     public function indexAction()
     {
-        $this->activateTab('hotfixes');
+        $this->addMainTabs('hotfixes');
 
-        $this->view->host = $this->params->get('host');
-        $updates = new Updates($this->view->host);
+        $this->addTitle($this->translate('Hotfix Details'));
 
-        $this->view->hotfix = $updates->loadHotfixesFromDB(
-            $this->params->get('id')
+        $this->content()->add(
+            new HotfixInfoTable(
+                $this->params->get('host'),
+                $this->params->get('id')
+            )
         );
     }
 }

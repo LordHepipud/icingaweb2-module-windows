@@ -109,4 +109,44 @@ class Tools
             $message
         );
     }
+
+    public function translateUpdateResultCode($code)
+    {
+        switch ($code) {
+            case 1:
+                return 'In Progress';
+            case 2:
+                return 'Success';
+            case 3:
+                return 'Success with Errors';
+            case 4:
+                return 'Failed';
+            case 5:
+                return 'Aborted';
+        }
+
+        return sprintf(
+            '%s (%s)',
+            'Unknown',
+            $code
+        );
+    }
+
+    public function getUpdateResultCodeIcon($code)
+    {
+        switch ($code) {
+            case 1:
+                return 'spinner';
+            case 2:
+                return 'ok';
+            case 3:
+                return 'warning-empty';
+            case 4:
+                return 'attention-circled';
+            case 5:
+                return 'clock';
+        }
+
+        return 'help';
+    }
 }

@@ -3,7 +3,9 @@
 
 namespace Icinga\Module\Windows\Controllers;
 
+use Icinga\Module\Windows\Controller;
 use Icinga\Module\Windows\Object\Objects\Updates;
+use Icinga\Module\Windows\Web\Table\Object\PendingUpdateInfoTable;
 use Icinga\Module\Windows\WindowsController;
 use Icinga\Module\Windows\Data\HostApi;
 use Icinga\Web\Url;
@@ -11,30 +13,32 @@ use Icinga\Web\Url;
 /**
  * Documentation module index
  */
-class PendingupdateController extends WindowsController
+class PendingupdateController extends Controller
 {
     protected $response;
+
     /**
      * Documentation module landing page
      *
      * Lists documentation links
+     * @throws \Icinga\Security\SecurityException
      */
     public function init()
     {
-        parent::init();
-        $this->view->title = 'Windows ' . $this->translate(' Environment') . ': ' . $this->translate('Overview');
         $this->assertPermission('windows/pendingupdate');
     }
 
     public function indexAction()
     {
-        $this->activateTab('updates');
+        $this->addMainTabs('updates');
 
-        $this->view->host = $this->params->get('host');
-        $updates = new Updates($this->view->host);
+        $this->addTitle($this->translate('Pending Update Details'));
 
-        $this->view->pendingupdate = $updates->loadPendingUpdatesFromDB(
-            $this->params->get('name')
+        $this->content()->add(
+            new PendingUpdateInfoTable(
+                $this->params->get('host'),
+                $this->params->get('name')
+            )
         );
     }
 }

@@ -164,11 +164,5 @@ class Controller extends CompatController
             'title'     => $this->translate('Updates', 'Tab title'),
             'url'       => \Icinga\Web\Url::fromRequest()->setPath('windows/updates')
         ));
-
-        $this->tabs()->add('hotfixes', array(
-            'active'    => $name === 'hotfixes',
-            'title'     => $this->translate('Hotfixes', 'Tab title'),
-            'url'       => \Icinga\Web\Url::fromRequest()->setPath('windows/hotfixes')
-        ));
     }
 }

@@ -4,12 +4,13 @@
 namespace Icinga\Module\Windows\Controllers;
 
 use Icinga\Module\Windows\Controller;
-use Icinga\Module\Windows\Web\Table\HotfixTable;
+use Icinga\Module\Windows\Web\Table\InstalledUpdatesTable;
+use Icinga\Module\Windows\Web\Table\PendingUpdatesTable;
 
 /**
  * Documentation module index
  */
-class HotfixesController extends Controller
+class PendingUpdatesController extends Controller
 {
     protected $response;
 
@@ -21,7 +22,7 @@ class HotfixesController extends Controller
      */
     public function init()
     {
-        $this->assertPermission('windows/hotfixes');
+        $this->assertPermission('windows/pendingupdates');
     }
 
     /**
@@ -29,10 +30,10 @@ class HotfixesController extends Controller
      */
     public function indexAction()
     {
-        $this->addMainTabs('hotfixes');
+        $this->addMainTabs('updates');
 
-        $this->addTitle($this->translate('Installed Hotfixes Overview'));
-        $table = new HotfixTable($this->getDb());
+        $this->addTitle($this->translate('Pending Updates Overview'));
+        $table = new PendingUpdatesTable($this->getDb());
         $table->setHost($this->params->get('host'));
         $table->handleSortUrl($this->url());
         $table->renderTo($this);
