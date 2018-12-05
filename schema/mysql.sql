@@ -49,9 +49,9 @@ CREATE TABLE host_module_checks(
 
 CREATE TABLE host_check_results(
 	`host_id` BIGINT(20) UNSIGNED NOT NULL,
-	`module` VARCHAR(40) NOT NULL,
-	`result` LONGTEXT NOT NULL,
-	`timestamp` TIMESTAMP DEFAULT 0 ON UPDATE CURRENT_TIMESTAMP,
+	`module` VARCHAR(40) NOT NULL DEFAULT '',
+	`result` LONGTEXT NULL DEFAULT NULL,
+	`timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	INDEX (`host_id`),
 	FOREIGN KEY (host_id) REFERENCES host_list(host_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -74,30 +74,30 @@ CREATE TABLE host_process_list(
   `proc_pagefile` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0,
   `proc_used_memory` BIGINT(20) unsigned NOT NULL DEFAULT 0,
   `proc_required_memory` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0,
-  `proc_cmd` LONGTEXT NOT NULL DEFAULT '',
+  `proc_cmd` LONGTEXT NULL DEFAULT NULL,
   INDEX (`host_id`),
 	FOREIGN KEY (host_id) REFERENCES host_list(host_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE host_pending_updates(
   `host_id` BIGINT(20) UNSIGNED NOT NULL,
-  `name` TEXT NOT NULL,
-  `description` TEXT NOT NULL,
-  `kbarticles` TEXT NOT NULL,
-  `uninst_note` LONGTEXT NOT NULL,
+  `name` TEXT NULL DEFAULT NULL,
+  `description` TEXT NULL DEFAULT NULL,
+  `kbarticles` TEXT NULL DEFAULT NULL,
+  `uninst_note` LONGTEXT NULL DEFAULT NULL,
   `support_url` VARCHAR(255) NOT NULL DEFAULT '',
   `require_reboot` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
   `download_size` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0,
   `downloaded` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
-  `superseded_ids` TEXT NOT NULL,
+  `superseded_ids` TEXT NULL DEFAULT NULL,
   INDEX (`host_id`),
 	FOREIGN KEY (host_id) REFERENCES host_list(host_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE host_update_history(
   `host_id` BIGINT(20) UNSIGNED NOT NULL,
-  `name` TEXT NOT NULL,
-  `description` TEXT NOT NULL,
+  `name` TEXT NULL DEFAULT NULL,
+  `description` TEXT NULL DEFAULT NULL,
   `result` INT(1) NOT NULL,
   `support_url` VARCHAR(255) NOT NULL DEFAULT '',
   `installed_on` VARCHAR(100) NOT NULL DEFAULT '',
@@ -109,13 +109,13 @@ CREATE TABLE host_update_history(
 CREATE TABLE host_hotfix_history(
   `host_id` BIGINT(20) UNSIGNED NOT NULL,
   `id` VARCHAR(20) NOT NULL,
-  `name` TEXT NOT NULL,
-  `description` TEXT NOT NULL,
-  `status` TEXT NOT NULL,
+  `name` TEXT NULL DEFAULT NULL,
+  `description` TEXT NULL DEFAULT NULL,
+  `status` TEXT NULL DEFAULT NULL,
   `install_date` VARCHAR(50) NOT NULL,
   `support_url` VARCHAR(255) NOT NULL DEFAULT '',
-  `fix_comment` TEXT NOT NULL,
-  `service_pack` TEXT NOT NULL,
+  `fix_comment` TEXT NULL DEFAULT NULL,
+  `service_pack` TEXT NULL DEFAULT NULL,
   `installed_by` VARCHAR(100) NOT NULL DEFAULT '',
   INDEX (`host_id`),
 	FOREIGN KEY (host_id) REFERENCES host_list(host_id)
@@ -154,7 +154,7 @@ CREATE TABLE host_hardware_memory(
   `memory_tye` INT(3) UNSIGNED NOT NULL DEFAULT 0,
   `total_width` INT(6) UNSIGNED NOT NULL DEFAULT 0,
   `clock_speed` INT(7) UNSIGNED NOT NULL DEFAULT 0,
-  `description` TEXT NOT NULL,
+  `description` TEXT NULL DEFAULT NULL,
   `tag` VARCHAR(255) NOT NULL DEFAULT '',
   `location` VARCHAR(255) NOT NULL DEFAULT '',
   `caption` VARCHAR(255) NOT NULL DEFAULT '',
@@ -191,7 +191,7 @@ CREATE TABLE host_hardware_disk(
   `total_sectors` INT(8) NOT NULL DEFAULT 0,
   `sectors_per_track` INT(8) NOT NULL DEFAULT 0,
   `manufacturer` VARCHAR(255) NOT NULL DEFAULT '',
-  `capabilities` TEXT NOT NULL,
+  `capabilities` TEXT NULL DEFAULT NULL,
   INDEX (`host_id`),
 	FOREIGN KEY (host_id) REFERENCES host_list(host_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -212,7 +212,7 @@ CREATE TABLE host_bios(
   `primary_bios` TINYINT(1) NOT NULL DEFAULT 0,
   `smbios_present` TINYINT(1) NOT NULL DEFAULT 0,
   `current_language` VARCHAR(255) NOT NULL DEFAULT '',
-  `available_languages` TEXT NOT NULL,
+  `available_languages` TEXT NULL DEFAULT NULL,
   `installable_languages` INT(2) NOT NULL DEFAULT 0,
   `status` VARCHAR(50) NOT NULL DEFAULT '',
   `caption` VARCHAR(255) NOT NULL DEFAULT '',
@@ -221,7 +221,7 @@ CREATE TABLE host_bios(
   `software_element_id` VARCHAR(255) NOT NULL DEFAULT '',
   `name` VARCHAR(255) NOT NULL DEFAULT '',
   `serial_number` VARCHAR(255) NOT NULL DEFAULT '',
-  `bios_version` TEXT NOT NULL,
+  `bios_version` TEXT NULL DEFAULT NULL,
   INDEX (`host_id`),
 	FOREIGN KEY (host_id) REFERENCES host_list(host_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -257,7 +257,7 @@ CREATE TABLE host_system(
   `boot_device` VARCHAR(255) NOT NULL DEFAULT '',
   `manufacturer` VARCHAR(255) NOT NULL DEFAULT '',
   `code_set` VARCHAR(255) NOT NULL DEFAULT '',
-  `name` TEXT NOT NULL,
+  `name` TEXT NULL DEFAULT NULL,
   `languages` VARCHAR(255) NOT NULL DEFAULT '',
   `last_boot_time` VARCHAR(255) NOT NULL DEFAULT '',
   `locale` VARCHAR(255) NOT NULL DEFAULT '',
@@ -287,7 +287,7 @@ CREATE TABLE host_perf_counter_help(
   `counter` VARCHAR(255) NOT NULL DEFAULT '',
   `counter_type` BIGINT(30) NOT NULL DEFAULT 0,
   `type` VARCHAR(255) NOT NULL DEFAULT '',
-  `help` TEXT NOT NULL DEFAULT '',
+  `help` TEXT NULL DEFAULT NULL,
   INDEX (`counter`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -303,7 +303,7 @@ CREATE TABLE host_interfaces(
   `pnp_device_id` VARCHAR(255) NOT NULL DEFAULT '',
   `speed` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0,
   `service_name` VARCHAR(255) NOT NULL DEFAULT '',
-  `network_addresses` TEXT NOT NULL DEFAULT '',
+  `network_addresses` TEXT NULL DEFAULT NULL,
   `adapter_type` VARCHAR(255) NOT NULL DEFAULT '',
   `manufacturer` VARCHAR(255) NOT NULL DEFAULT '',
   INDEX (`host_id`),
@@ -314,10 +314,10 @@ CREATE TABLE host_service_list(
   `host_id` BIGINT(20) UNSIGNED NOT NULL,
   `display_name` VARCHAR(255) NOT NULL DEFAULT '',
   `service_name` VARCHAR(255) NOT NULL DEFAULT '',
-  `dependent_services` TEXT NOT NULL DEFAULT '',
+  `dependent_services` TEXT NULL DEFAULT NULL,
   `can_pause_and_continue` TINYINT(1) NOT NULL DEFAULT 0,
-  `service_handle` TEXT NOT NULL DEFAULT '',
-  `depends_on` TEXT NOT NULL DEFAULT '',
+  `service_handle` TEXT NULL DEFAULT NULL,
+  `depends_on` TEXT NULL DEFAULT NULL,
   `can_stop` TINYINT(1) NOT NULL DEFAULT 0,
   `service_type` INT(3) NOT NULL DEFAULT 0,
   `can_shutdown` TINYINT(1) NOT NULL DEFAULT 0,
@@ -329,4 +329,4 @@ CREATE TABLE host_service_list(
 
 INSERT INTO windows_schema_migration
     (schema_version, migration_time)
-VALUES (1, NOW());
+VALUES (2, NOW());
