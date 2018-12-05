@@ -58,7 +58,7 @@ class Migrations
      */
     public function hasModuleRelatedTable()
     {
-        return in_array('virtual_machine', $this->db->listTables());
+        return in_array('host_list', $this->db->listTables());
     }
 
     /**
