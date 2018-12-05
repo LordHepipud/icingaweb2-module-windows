@@ -22,6 +22,7 @@ class BackendConfigForm extends ConfigForm
 
     /**
      * {@inheritdoc}
+     * @throws \Zend_Form_Exception
      */
     public function createElements(array $formData)
     {
@@ -51,9 +52,11 @@ class BackendConfigForm extends ConfigForm
     /**
      * Return whether the given values are valid
      *
-     * @param   array   $formData   The data to validate
+     * @param   array $formData The data to validate
      *
      * @return  bool
+     * @throws \Icinga\Exception\ConfigurationError
+     * @throws \Zend_Form_Exception
      */
     public function isValid($formData)
     {
@@ -93,6 +96,7 @@ class BackendConfigForm extends ConfigForm
 
     /**
      * Add a checkbox to the form by which the user can skip the schema validation
+     * @throws \Zend_Form_Exception
      */
     protected function addSkipValidationCheckbox()
     {
