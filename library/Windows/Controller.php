@@ -165,4 +165,19 @@ class Controller extends CompatController
             'url'       => \Icinga\Web\Url::fromRequest()->setPath('windows/updates')
         ));
     }
+
+    protected function addConfigTabs($name)
+    {
+        $this->tabs()->add('hosts', array(
+            'active'    => $name === 'hosts',
+            'title'     => $this->translate('Hosts', 'Tab title'),
+            'url'       => \Icinga\Web\Url::fromRequest()->setPath('windows/hosts')
+        ));
+
+        $this->tabs()->add('config', array(
+            'active'    => $name === 'config',
+            'title'     => $this->translate('Config', 'Tab title'),
+            'url'       => \Icinga\Web\Url::fromRequest()->setPath('windows/config')
+        ));
+    }
 }

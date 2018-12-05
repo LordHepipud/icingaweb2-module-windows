@@ -20,13 +20,13 @@ class ConfigController extends Controller
     {
         $this->assertPermission('windows/config');
         $this->addTitle($this->translate('Main Configuration'));
+        $this->addConfigTabs('config');
         $this->content()->add(
             ChooseDbResourceForm::load()->handleRequest()
         );
 
         if ($this->Config()->get('db', 'resource')) {
             $db = $this->db();
-
             $migrations = new Migrations($db);
 
             if ($migrations->hasSchema()) {
