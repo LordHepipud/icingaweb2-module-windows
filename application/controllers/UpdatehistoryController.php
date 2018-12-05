@@ -4,12 +4,12 @@
 namespace Icinga\Module\Windows\Controllers;
 
 use Icinga\Module\Windows\Controller;
-use Icinga\Module\Windows\Web\Table\PendingUpdatesTable;
+use Icinga\Module\Windows\Web\Table\InstalledUpdatesTable;
 
 /**
  * Documentation module index
  */
-class PendingUpdatesController extends Controller
+class UpdatehistoryController extends Controller
 {
     protected $response;
 
@@ -21,7 +21,7 @@ class PendingUpdatesController extends Controller
      */
     public function init()
     {
-        $this->assertPermission('windows/pendingupdates');
+        $this->assertPermission('windows/updatehistor');
     }
 
     /**
@@ -31,8 +31,8 @@ class PendingUpdatesController extends Controller
     {
         $this->addMainTabs('updates');
 
-        $this->addTitle($this->translate('Pending Updates Overview'));
-        $table = new PendingUpdatesTable($this->getDb());
+        $this->addTitle($this->translate('Updates Overview'));
+        $table = new InstalledUpdatesTable($this->getDb());
         $table->setHost($this->params->get('host'));
         $table->handleSortUrl($this->url());
         $table->renderTo($this);
