@@ -52,9 +52,9 @@ class PendingUpdateInfoTable extends NameValueTable
                 'target' => '_blank',
                 'title' => $this->translate('Jump to Microsoft Update knowledge base')
             ], $this->update->getSupportUrl()),
-            $this->translate('Require Reboot') => $this->update->getRequireReboot() === true ? 'Yes' : 'No',
+            $this->translate('Require Reboot') => $this->update->getRequireReboot() == 1 ? 'Yes' : 'No',
             $this->translate('Download Size') => round(Tools::getInstance()->convertBytesToMB($this->update->getDownloadSize()), 2) . ' MB',
-            $this->translate('Downloaded') => $this->update->getDownloaded() === true ? 'Yes' : 'No',
+            $this->translate('Downloaded') => $this->update->getDownloaded() == 1 ? 'Yes' : 'No',
             $this->translate('Superseded Update IDs') => $this->update->getSupersededIDs()
         ]);
     }
