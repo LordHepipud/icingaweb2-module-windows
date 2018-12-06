@@ -207,9 +207,9 @@ class CheckCommand extends CommandBase
         $percentFree = round($freeMemory * 100 / $totalMemory, 2);
 
         if ($warning_percent != null || $critical_percent != null) {
-            if ($percentFree >= $critical_percent && $critical_percent != null) {
+            if ($percentFree <= $critical_percent && $critical_percent != null) {
                 $exitcode = 2;
-            } else if ($percentFree >= $warning_percent && $warning_percent != null) {
+            } else if ($percentFree <= $warning_percent && $warning_percent != null) {
                 $exitcode = 1;
             }
         } else {
