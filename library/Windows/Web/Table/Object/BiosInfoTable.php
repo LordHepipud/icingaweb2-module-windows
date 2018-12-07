@@ -50,8 +50,9 @@ class BiosInfoTable extends NameValueTable
         foreach ($this->bios->getBiosData() as $bios){
             $this->addNameValuePairs([
                 $this->translate('Manufacturer') => $bios->getManufacturer(),
-                $this->translate('Service Tag') => Link::create(
-                    $bios->getSerialNumber(),
+                $this->translate('Service Tag') => $bios->getSerialNumber(),
+                $this->translate('Details') => Link::create(
+                    'Bios',
                     'windows/bios',
                     [
                         'host'      => $this->hostname,
