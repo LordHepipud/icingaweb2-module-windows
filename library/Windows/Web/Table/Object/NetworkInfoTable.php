@@ -81,7 +81,15 @@ class NetworkInfoTable extends NameValueTable
     protected function createInterfaceUsageBar($interface)
     {
         $size = $interface->getSpeed();
-        $used = $interface->getReference($interface->getName() . '\\' . 'Bytes Total/sec')->getValue();
+
+        if ($size == 0) {
+            $size = $interface->getReference(
+                $interface->getName() . '\\' . 'Current Bandwidth'
+            )->getValue();
+        }
+        $used = $interface->getReference(
+            $interface->getName() . '\\' . 'Bytes Total/sec'
+        )->getValue();
 
         if ($size == 0) {
             $size = 1;
