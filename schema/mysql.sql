@@ -188,7 +188,7 @@ CREATE TABLE host_hardware_disk(
   `total_cylinders` INT(8) NOT NULL DEFAULT 0,
   `scsi_bus` INT(1) NOT NULL DEFAULT 0,
   `signature` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0,
-  `total_sectors` INT(8) NOT NULL DEFAULT 0,
+  `total_sectors` BIGINT(20) NOT NULL DEFAULT 0,
   `sectors_per_track` INT(8) NOT NULL DEFAULT 0,
   `manufacturer` VARCHAR(255) NOT NULL DEFAULT '',
   `capabilities` TEXT NULL DEFAULT NULL,
@@ -329,4 +329,4 @@ CREATE TABLE host_service_list(
 
 INSERT INTO windows_schema_migration
     (schema_version, migration_time)
-VALUES (2, NOW());
+VALUES (3, NOW());
