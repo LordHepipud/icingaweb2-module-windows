@@ -6,6 +6,6 @@ class InterfaceUsage extends UsageBar
 {
     protected $formatter = [
         'Icinga\\Module\\Windows\\Format',
-        'convertBytes'
+        'convertBytesPerSecond'
     ];
 }
