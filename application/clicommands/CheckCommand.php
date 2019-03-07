@@ -2,6 +2,8 @@
 
 namespace Icinga\Module\Windows\Clicommands;
 
+use Icinga\Module\Monitoring\Object\Service;
+use Icinga\Module\Windows\Object\Objects\Host;
 use Icinga\Module\Windows\Object\Objects\Memory;
 use Icinga\Module\Windows\Object\Objects\Processes;
 use Icinga\Module\Windows\Object\Objects\Services;
@@ -25,21 +27,29 @@ class CheckCommand extends CommandBase
      */
     public function pendingupdatesAction()
     {
-        $host = $this->params->getRequired('host');
+        $host = new Host(
+            $this->params->getRequired('host')
+        );
         $warning = $this->params->get('warning');
         $critical = $this->params->get('critical');
 
-        $exitcode = 0;
+        if(!$host->exist() || !$host->approved()) {
+            exit($this->exitUnknown($host));
+        }
 
-        $updates = new Updates($host);
+        $exitcode = Service::STATE_UNKNOWN;
+
+        $updates = new Updates($host->name());
         $updates->loadPendingUpdatesFromDB();
 
         $pendingupdates = Count($updates->getPendingUpdates());
 
         if ($pendingupdates >= $critical && $critical != null) {
-            $exitcode = 2;
+            $exitcode = Service::STATE_CRITICAL;
         } else if ($pendingupdates >= $warning && $warning != null) {
-            $exitcode = 1;
+            $exitcode = Service::STATE_WARNING;
+        } else {
+            $exitcode = Service::STATE_OK;
         }
 
         Tools::getInstance()->getCliOutputMessage(
@@ -59,9 +69,15 @@ class CheckCommand extends CommandBase
      */
     public function hotfixAction()
     {
-        $host = $this->params->getRequired('host');
+        $host = new Host(
+            $this->params->getRequired('host')
+        );
         $hotfixId = $this->params->getRequired('hotfix');
         $required = $this->params->get('required');
+
+        if(!$host->exist() || !$host->approved()) {
+            exit($this->exitUnknown($host));
+        }
 
         if ($required == null) {
             $required = true;
@@ -69,16 +85,18 @@ class CheckCommand extends CommandBase
             $required = boolval($required);
         }
 
-        $exitcode = 0;
+        $exitcode = Service::STATE_UNKNOWN;
 
-        $hotfix = new Updates($host);
+        $hotfix = new Updates($host->name());
 
         $installed = $hotfix->loadHotfixesFromDB($hotfixId);
 
         if ($installed == null && $required == true) {
-            $exitcode = 2;
+            $exitcode = Service::STATE_CRITICAL;
         } else if ($installed != null && $required == false) {
-            $exitcode = 2;
+            $exitcode = Service::STATE_CRITICAL;
+        } else {
+            $exitcode = Service::STATE_OK;
         }
 
         Tools::getInstance()->getCliOutputMessage(
@@ -98,9 +116,15 @@ class CheckCommand extends CommandBase
      */
     public function updateAction()
     {
-        $host = $this->params->getRequired('host');
+        $host = new Host(
+            $this->params->getRequired('host')
+        );
         $updatename = $this->params->getRequired('update');
         $required = $this->params->get('required');
+
+        if(!$host->exist() || !$host->approved()) {
+            exit($this->exitUnknown($host));
+        }
 
         if ($required == null) {
             $required = true;
@@ -111,9 +135,9 @@ class CheckCommand extends CommandBase
         $updatename = strtolower($updatename);
         $DBUpdateName = $updatename;
 
-        $exitcode = 0;
+        $exitcode = Service::STATE_UNKNOWN;
 
-        $updates = new Updates($host);
+        $updates = new Updates($host->name());
 
         $updatelist = $updates->loadUpdateHistoryFromDB();
         $installed = false;
@@ -129,9 +153,11 @@ class CheckCommand extends CommandBase
         }
 
         if ($installed == false && $required == true) {
-            $exitcode = 2;
+            $exitcode = Service::STATE_CRITICAL;
         } else if ($installed == true && $required == false) {
-            $exitcode = 2;
+            $exitcode = Service::STATE_CRITICAL;
+        } else {
+            $exitcode = Service::STATE_OK;
         }
 
         Tools::getInstance()->getCliOutputMessage(
@@ -151,26 +177,34 @@ class CheckCommand extends CommandBase
      */
     public function loadAction()
     {
-        $host = $this->params->getRequired('host');
+        $host = new Host(
+            $this->params->getRequired('host')
+        );
         $core = $this->params->get('core');
         $warning = $this->params->get('warning');
         $critical = $this->params->get('critical');
+
+        if(!$host->exist() || !$host->approved()) {
+            exit($this->exitUnknown($host));
+        }
 
         if ($core == null) {
             $core = '_Total';
         }
 
-        $exitcode = 0;
+        $exitcode = Service::STATE_UNKNOWN;
 
-        $cpu = new Cpu($host);
+        $cpu = new Cpu($host->name());
         $cpu->loadFromDb();
 
         $load = round($cpu->getCoreById($core)->getValue(), 2);
 
         if ($load >= $critical && $critical != null) {
-            $exitcode = 2;
+            $exitcode = Service::STATE_CRITICAL;
         } else if ($load >= $warning && $warning != null) {
-            $exitcode = 1;
+            $exitcode = Service::STATE_WARNING;
+        } else {
+            $exitcode = Service::STATE_OK;
         }
 
         Tools::getInstance()->getCliOutputMessage(
@@ -190,15 +224,21 @@ class CheckCommand extends CommandBase
      */
     public function memoryAction()
     {
-        $host = $this->params->getRequired('host');
+        $host = new Host(
+            $this->params->getRequired('host')
+        );
         $warning = $this->params->get('warning');
         $critical = $this->params->get('critical');
         $warning_percent = $this->params->get('warning_percent');
         $critical_percent = $this->params->get('critical_percent');
 
-        $exitcode = 0;
+        if(!$host->exist() || !$host->approved()) {
+            exit($this->exitUnknown($host));
+        }
 
-        $memory = new Memory($host);
+        $exitcode = Service::STATE_UNKNOWN;
+
+        $memory = new Memory($host->name());
         $memory->loadFromDb();
 
         $freeMemory = round(Tools::getInstance()->convertBytesToMB($memory->getFreeMemory()), 2);
@@ -208,15 +248,19 @@ class CheckCommand extends CommandBase
 
         if ($warning_percent != null || $critical_percent != null) {
             if ($percentFree <= $critical_percent && $critical_percent != null) {
-                $exitcode = 2;
+                $exitcode = Service::STATE_CRITICAL;
             } else if ($percentFree <= $warning_percent && $warning_percent != null) {
-                $exitcode = 1;
+                $exitcode = Service::STATE_WARNING;
+            } else {
+                $exitcode = Service::STATE_OK;
             }
         } else {
             if ($freeMemory <= $critical && $critical != null) {
-                $exitcode = 2;
+                $exitcode = Service::STATE_CRITICAL;
             } else if ($freeMemory <= $warning && $warning != null) {
-                $exitcode = 1;
+                $exitcode = Service::STATE_WARNING;
+            } else {
+                $exitcode = Service::STATE_OK;
             }
         }
 
@@ -239,19 +283,25 @@ class CheckCommand extends CommandBase
      */
     public function serviceAction()
     {
-        $host = $this->params->getRequired('host');
+        $host = new Host(
+            $this->params->getRequired('host')
+        );
         $serviceName = $this->params->getRequired('service');
         $status = $this->params->get('status');
+
+        if(!$host->exist() || !$host->approved()) {
+            exit($this->exitUnknown($host));
+        }
 
         // Use Running state as default if we did not specify it
         if ($status == null) {
             $status = 4;
         }
 
-        $service = new Services($host);
+        $service = new Services($host->name());
 
         $result = $service->getService($serviceName, false);
-        $exitcode = 0;
+        $exitcode = Service::STATE_OK;
 
         if ($result == false) {
             Tools::getInstance()->getCliOutputMessage(
@@ -260,7 +310,7 @@ class CheckCommand extends CommandBase
             );
         } else {
             if ($result->status != $status) {
-                $exitcode = 2;
+                $exitcode = Service::STATE_CRITICAL;
             }
             Tools::getInstance()->getCliOutputMessage(
                 'Service ' . $result->display_name . ' (' . $result->service_name . ') is currently ' . $service->getServiceStatus($result->status),
@@ -280,18 +330,24 @@ class CheckCommand extends CommandBase
      */
     public function processAction()
     {
-        $host = $this->params->getRequired('host');
+        $host = new Host(
+            $this->params->getRequired('host')
+        );
         $process = $this->params->getRequired('process');
         $warning = $this->params->get('warning');
         $critical = $this->params->get('critical');
         $negate = $this->params->get('negate');
 
+        if(!$host->exist() || !$host->approved()) {
+            exit($this->exitUnknown($host));
+        }
+
         if ($negate == null) {
             $negate = 0;
         }
 
-        $exitcode = 0;
-        $processes = new Processes($host);
+        $exitcode = Service::STATE_UNKNOWN;
+        $processes = new Processes($host->name());
 
         $result = $processes->loadSingleDB($process);
 
@@ -300,15 +356,19 @@ class CheckCommand extends CommandBase
 
         if ($negate == 0) {
             if ($processCount <= $critical && $critical != null) {
-                $exitcode = 2;
+                $exitcode = Service::STATE_CRITICAL;
             } else if ($processCount <= $warning && $warning != null) {
-                $exitcode = 1;
+                $exitcode = Service::STATE_WARNING;
+            } else {
+                $exitcode = Service::STATE_OK;
             }
         } elseif ($negate == 1) {
             if ($processCount >= $critical && $critical != null) {
-                $exitcode = 2;
+                $exitcode = Service::STATE_CRITICAL;
             } else if ($processCount >= $warning && $warning != null) {
-                $exitcode = 1;
+                $exitcode = Service::STATE_WARNING;
+            } else {
+                $exitcode = Service::STATE_OK;
             }
         }
 
@@ -329,7 +389,9 @@ class CheckCommand extends CommandBase
      */
     public function counterAction()
     {
-        $host = $this->params->getRequired('host');
+        $host = new Host(
+            $this->params->getRequired('host')
+        );
         $counterName = $this->params->getRequired('counter');
         $category = $this->params->get('category');
         $instance = $this->params->get('instance');
@@ -338,13 +400,17 @@ class CheckCommand extends CommandBase
         $critical = $this->params->get('critical');
         $negate = $this->params->get('negate');
 
+        if(!$host->exist() || !$host->approved()) {
+            exit($this->exitUnknown($host));
+        }
+
         if ($negate == null) {
             $negate = 0;
         }
 
-        $exitcode = 0;
+        $exitcode = Service::STATE_UNKNOWN;
 
-        $perfCounter = new PerfCounter($host);
+        $perfCounter = new PerfCounter($host->name());
         $path = '';
         $value = 0;
 
@@ -360,7 +426,7 @@ class CheckCommand extends CommandBase
         }
 
         if ($perfCounter->hasReference($path) == false && $perfCounter->hasCounter($path) == false) {
-            $exitcode = 1;
+            $exitcode = Service::STATE_WARNING;
             Tools::getInstance()->getCliOutputMessage(
                 'The counter "' . $path . '" does not exist.',
                 $exitcode
@@ -373,15 +439,19 @@ class CheckCommand extends CommandBase
 
         if ($negate == 0) {
             if ($value <= $critical && $critical != null) {
-                $exitcode = 2;
+                $exitcode = Service::STATE_CRITICAL;
             } else if ($value <= $warning && $warning != null) {
-                $exitcode = 1;
+                $exitcode = Service::STATE_WARNING;
+            } else {
+                $exitcode = Service::STATE_OK;
             }
         } elseif ($negate == 1) {
             if ($value >= $critical && $critical != null) {
-                $exitcode = 2;
+                $exitcode = Service::STATE_CRITICAL;
             } else if ($value >= $warning && $warning != null) {
-                $exitcode = 1;
+                $exitcode = Service::STATE_WARNING;
+            } else {
+                $exitcode = Service::STATE_OK;
             }
         }
 
