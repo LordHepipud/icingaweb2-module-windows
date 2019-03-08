@@ -426,7 +426,7 @@ class CheckCommand extends CommandBase
         }
 
         if ($perfCounter->hasReference($path) == false && $perfCounter->hasCounter($path) == false) {
-            $exitcode = Service::STATE_WARNING;
+            $exitcode = Service::STATE_UNKNOWN;
             Tools::getInstance()->getCliOutputMessage(
                 'The counter "' . $path . '" does not exist.',
                 $exitcode
