@@ -94,7 +94,7 @@ class ApiHandler
                 'port'    => $this->json['port']
             ),
             Filter::matchAll(
-                Filter::expression('host_id', '=', $this->json['fqdn'])
+                Filter::expression('host', '=', $this->json['fqdn'])
             )
         );
 
