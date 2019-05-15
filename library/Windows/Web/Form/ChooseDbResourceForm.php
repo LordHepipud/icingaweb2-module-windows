@@ -2,8 +2,8 @@
 
 namespace Icinga\Module\Windows\Web\Form;
 
-use dipl\Html\Html;
-use dipl\Html\Link;
+use ipl\Html\Html;
+use gipfl\IcingaWeb2\Link;
 use Exception;
 use Icinga\Application\Config;
 use Icinga\Data\ResourceFactory;

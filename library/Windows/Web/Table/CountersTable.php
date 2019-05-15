@@ -2,7 +2,7 @@
 
 namespace Icinga\Module\Windows\Web\Table;
 
-use dipl\Html\Link;
+use gipfl\IcingaWeb2\Link;
 use Icinga\Module\Windows\Format;
 use Icinga\Module\Windows\Helper\DbHelper;
 

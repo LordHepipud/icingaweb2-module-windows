@@ -3,8 +3,8 @@
 
 namespace Icinga\Module\Windows\Controllers;
 
-use dipl\Html\Html;
-use dipl\Html\Link;
+use ipl\Html\Html;
+use gipfl\IcingaWeb2\Link;
 use Icinga\Module\Windows\Forms\CustomActionForm;
 use Icinga\Module\Windows\Controller;
 use Icinga\Module\Windows\Helper\DbHelper;

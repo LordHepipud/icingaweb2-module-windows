@@ -2,10 +2,9 @@
 
 namespace Icinga\Module\Windows\Web\Form;
 
-use dipl\Html\Html;
-use Icinga\Module\Director\Web\Form\DirectorForm;
+use ipl\Html\Html;
 
-class BaseForm extends DirectorForm
+class BaseForm extends WindowsForm
 {
     private $hintCount = 0;
 
@@ -29,7 +28,7 @@ class BaseForm extends DirectorForm
     /**
      * @param $html
      * @param array $options
-     * @return DirectorForm|BaseForm
+     * @return WindowsForm|BaseForm
      * @throws \Zend_Form_Exception
      */
     public function addHint($html, $options = [])
@@ -40,7 +39,7 @@ class BaseForm extends DirectorForm
     /**
      * @param $html
      * @param array $options
-     * @return $this|DirectorForm
+     * @return $this|WindowsForm
      * @throws \Zend_Form_Exception
      */
     public function addHtml($html, $options = [])

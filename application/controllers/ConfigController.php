@@ -3,7 +3,7 @@
 
 namespace Icinga\Module\Windows\Controllers;
 
-use dipl\Html\Html;
+use ipl\Html\Html;
 use Icinga\Module\Windows\Forms\Config\GlobalConfigForm;
 use Icinga\Module\Windows\Web\Form\ApplyMigrationsForm;
 use Icinga\Module\Windows\Web\Form\ChooseDbResourceForm;

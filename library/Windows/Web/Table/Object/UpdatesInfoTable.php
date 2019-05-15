@@ -2,9 +2,9 @@
 
 namespace Icinga\Module\Windows\Web\Table\Object;
 
-use dipl\Translation\TranslationHelper;
-use dipl\Html\Link;
-use dipl\Web\Widget\NameValueTable;
+use gipfl\Translation\TranslationHelper;
+use gipfl\IcingaWeb2\Link;
+use gipfl\IcingaWeb2\Widget\NameValueTable;
 use Icinga\Module\Windows\Object\Objects\Updates;
 
 class UpdatesInfoTable extends NameValueTable

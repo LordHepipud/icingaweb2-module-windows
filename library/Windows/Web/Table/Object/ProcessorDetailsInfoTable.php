@@ -2,9 +2,9 @@
 
 namespace Icinga\Module\Windows\Web\Table\Object;
 
-use dipl\Translation\TranslationHelper;
-use dipl\Html\Html;
-use dipl\Web\Widget\NameValueTable;
+use gipfl\Translation\TranslationHelper;
+use ipl\Html\Html;
+use gipfl\IcingaWeb2\Widget\NameValueTable;
 use Icinga\Module\Windows\Helper\DbHelper;
 use Icinga\Module\Windows\Object\Objects\Cpu;
 use Icinga\Module\Windows\Object\Objects\Hardware;

@@ -2,8 +2,8 @@
 
 namespace Icinga\Module\Windows\Web\Table\Object;
 
-use dipl\Translation\TranslationHelper;
-use dipl\Web\Widget\NameValueTable;
+use gipfl\Translation\TranslationHelper;
+use gipfl\IcingaWeb2\Widget\NameValueTable;
 use Icinga\Module\Windows\Helper\DbHelper;
 use Icinga\Module\Windows\WindowsDB;
 

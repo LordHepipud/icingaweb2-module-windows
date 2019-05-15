@@ -1,6 +1,6 @@
 Module: Icinga Module for Windows
 Version: 0.0.2-technical-preview
-Depends: director>=1.4.0
+Depends: ipl>=0.2.1, incubator>=0.2.0
 Description: Windows Infrastructure Module
  Get an overview of all your Windows hosts within your infrastrcuture, allowing
  a quick and detailed overview about most common attributes of your systems.

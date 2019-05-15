@@ -2,10 +2,10 @@
 
 namespace Icinga\Module\Windows\Forms;
 
-use dipl\Html\Icon;
-use Icinga\Module\Director\Web\Form\DirectorForm;
+use gipfl\IcingaWeb2\Icon;
+use Icinga\Module\Windows\Web\Form\WindowsForm;
 
-class CustomActionForm extends DirectorForm
+class CustomActionForm extends WindowsForm
 {
     private $label;
 

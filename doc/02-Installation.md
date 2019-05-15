@@ -1,6 +1,16 @@
 Installing the Icinga Web 2 Module
 =====================================
 
+Requirements
+------------
+
+* Icinga Web 2 (&gt;= 2.5)
+* PHP (&gt;= 5.6, preferably 7.x)
+* MySQL (&gt;= 5.6) or MariaDB (&gt;= 5.5.3)
+* Icinga Web 2 modules:
+  * [Icinga PHP Library (ipl)](https://github.com/Icinga/icingaweb2-module-ipl) (>= 0.2.1) (Icinga Web 2 module)
+  * [incubator](https://github.com/Icinga/icingaweb2-module-incubator) (>= 0.2) (Icinga Web 2 module)
+
 Install the Module
 -------------
 

@@ -3,8 +3,8 @@
 
 namespace Icinga\Module\Windows;
 
-use dipl\Html\Error;
-use dipl\Web\CompatController;
+use ipl\Html\Error;
+use gipfl\IcingaWeb2\CompatController;
 use Exception;
 use Icinga\Application\Icinga;
 use Icinga\Exception\IcingaException;

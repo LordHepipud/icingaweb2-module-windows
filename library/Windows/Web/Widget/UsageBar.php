@@ -2,9 +2,9 @@
 
 namespace Icinga\Module\Windows\Web\Widget;
 
-use dipl\Html\BaseHtmlElement;
-use dipl\Translation\TranslationHelper;
-use dipl\Html\Html;
+use ipl\Html\BaseHtmlElement;
+use gipfl\Translation\TranslationHelper;
+use ipl\Html\Html;
 
 class UsageBar extends BaseHtmlElement
 {
